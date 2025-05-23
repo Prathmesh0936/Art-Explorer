@@ -1,16 +1,15 @@
 import type { Metadata } from 'next';
-import { GeistSans } from 'next/font/google'; // Corrected import for GeistSans
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { Header } from '@/components/Header';
-import { Toaster } from "@/components/ui/toaster"; // Ensure Toaster is imported
+import { Toaster } from "@/components/ui/toaster";
 
-const geistSans = GeistSans({ // Correct instantiation
+const geistSans = GeistSans({
   variable: '--font-geist-sans',
   subsets: ['latin'],
 });
 
-// GeistMono is not explicitly used but kept from original for font variable consistency
-import { GeistMono } from 'next/font/google';
 const geistMono = GeistMono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
