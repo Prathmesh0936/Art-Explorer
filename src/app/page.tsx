@@ -10,7 +10,7 @@ import Image from 'next/image';
 import type { ArticApiResponse, Artwork } from '@/lib/types';
 import { ArrowRight, Brush, ListTree } from 'lucide-react';
 import GlobalPageStyles from '@/components/GlobalPageStyles';
-import { InteractiveCategoryList } from '@/components/InteractiveCategoryList'; // New import
+import { InteractiveCategoryList } from '@/components/InteractiveCategoryList';
 
 interface HomeProps {
   searchParams?: {
@@ -56,31 +56,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
   return (
     <div className="flex flex-col bg-background text-foreground">
       <GlobalPageStyles />
-      {/* Hero Section */}
-      <section className="relative h-[75vh] min-h-[550px] flex items-center justify-center text-center text-white overflow-hidden">
-        <Image 
-          src="https://placehold.co/1920x1080.png" 
-          data-ai-hint="abstract art background" 
-          alt="Hero background" 
-          fill={true}
-          style={{objectFit: 'cover'}}
-          className="absolute z-0 opacity-40" 
-          priority
-        />
-        <div className="absolute inset-0 bg-black/40 z-0"></div> {/* Dark overlay */}
-        <div className="relative z-10 p-6 md:p-8 max-w-3xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight leading-tight animate-fade-in-up">
-            Discover Timeless Artistry
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-10 text-gray-200 animate-fade-in-up animation-delay-300">
-            Explore a curated collection of masterpieces from renowned artists and emerging talents.
-          </p>
-          <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground py-3 px-6 md:px-8 text-md md:text-lg rounded-md shadow-lg transition-transform hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background animate-fade-in-up animation-delay-600">
-            <Link href="/#explore-collection">Explore Gallery <ArrowRight className="ml-2 h-5 w-5" /></Link>
-          </Button>
-        </div>
-      </section>
-
+      
       {/* Browse by Category Section */}
       <section id="browse-categories" className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4">
