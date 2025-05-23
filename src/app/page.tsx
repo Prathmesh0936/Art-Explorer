@@ -7,10 +7,11 @@ import { FullPageLoading } from '@/components/LoadingSpinner';
 import { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import Image from 'next/image';
 import type { ArticApiResponse, Artwork } from '@/lib/types';
-import { ArrowRight, Brush, Palette } from 'lucide-react';
+import { Palette } from 'lucide-react';
 import GlobalPageStyles from '@/components/GlobalPageStyles';
+import CategorizedArtPreview from '@/components/CategorizedArtPreview';
+
 
 interface HomeProps {
   searchParams?: {
@@ -71,6 +72,11 @@ export default async function HomePage({ searchParams }: HomeProps) {
           </Suspense>
         </div>
       </section>
+      
+      {/* Browse Highlights by Category Section */}
+      <Suspense fallback={<FullPageLoading message="Loading categories..." />}>
+        <CategorizedArtPreview />
+      </Suspense>
       
       {/* Explore Our Full Collection Section */}
       <section id="explore-collection" className="py-16 md:py-24 bg-background">
