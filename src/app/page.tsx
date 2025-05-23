@@ -73,47 +73,6 @@ export default async function HomePage({ searchParams }: HomeProps) {
           </Suspense>
         </div>
       </section>
-
-      {/* Artist Spotlight Section */}
-      <section className="py-16 md:py-24 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-16">
-            <div className="md:w-1/2 w-full relative aspect-square md:aspect-[4/3] rounded-lg overflow-hidden shadow-2xl group">
-              <Image 
-                src="https://placehold.co/800x600.png" 
-                data-ai-hint="artist portrait painting" 
-                alt="Artist Spotlight" 
-                fill={true}
-                style={{objectFit: 'cover'}}
-                className="transition-transform duration-500 ease-in-out group-hover:scale-105" 
-              />
-            </div>
-            <div className="md:w-1/2 text-center md:text-left">
-              <Brush className="text-primary h-10 w-10 md:h-12 md:w-12 mx-auto md:mx-0 mb-4" />
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-4">Spotlight on: Elena Petrova</h3>
-              <p className="text-md sm:text-lg text-muted-foreground mb-6 leading-relaxed">
-                Elena Petrova, a contemporary visionary, masterfully blends classical techniques with modern abstraction. Her work explores themes of nature, emotion, and the passage of time, inviting viewers into a world of vibrant color and intricate detail.
-              </p>
-              <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10 rounded-md shadow-md transition-all hover:shadow-lg hover:border-primary/80">
-                Discover Her Work <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary via-accent to-blue-700 text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-6">Ready to Explore?</h2>
-          <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-            Dive into a world of creativity and find pieces that speak to you. Our collection is constantly growing.
-          </p>
-          <Button asChild size="lg" variant="secondary" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 py-3 px-6 md:px-8 text-md md:text-lg rounded-md shadow-xl transition-transform hover:scale-105 focus:ring-2 focus:ring-primary-foreground focus:ring-offset-2 focus:ring-offset-primary">
-            <Link href="/#explore-collection">Start Your Journey</Link>
-          </Button>
-        </div>
-      </section>
     </div>
   );
 }
