@@ -8,23 +8,23 @@ body {
 
 @layer base {
   :root {
-    --background: 222 47% 11%; /* Dark Slate Blue */
-    --foreground: 210 40% 96%; /* Light Grayish Blue */
+    --background: 222 47% 11%; /* Figma: #131B29 (approx HSL(220, 38%, 12%)) */
+    --foreground: 210 40% 96%; /* Figma: #F0F4F8 (approx HSL(210, 25%, 95%)) */
 
-    --card: 222 47% 14%; /* Slightly lighter than background */
+    --card: 222 47% 14%; /* Figma: #1A2233 (approx HSL(222, 33%, 15%)) */
     --card-foreground: 210 40% 96%;
 
-    --popover: 222 47% 11%;
+    --popover: 222 47% 9%; /* Slightly darker for popovers */
     --popover-foreground: 210 40% 96%;
 
-    --primary: 217 91% 60%; /* Vibrant Blue */
-    --primary-foreground: 210 40% 98%; /* White for contrast on blue */
+    --primary: 217 91% 60%; /* Figma: #2578F4 (approx HSL(217, 90%, 55%)) */
+    --primary-foreground: 210 40% 98%; 
 
-    --secondary: 215 28% 17%; /* Darker Blue/Gray */
+    --secondary: 215 28% 17%; /* Figma: #20293A (approx HSL(219, 29%, 18%)) */
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 28% 17%;
-    --muted-foreground: 215 20% 65%; /* Lighter Gray for muted text */
+    --muted: 215 28% 23%; /* Slightly lighter than secondary for muted elements like borders */
+    --muted-foreground: 215 20% 65%; /* Figma: #8A9CB0 (approx HSL(212, 17%, 62%)) */
 
     --accent: 200 80% 55%; /* A slightly different shade of blue for accent if needed */
     --accent-foreground: 210 40% 98%; 
@@ -32,8 +32,8 @@ body {
     --destructive: 0 72% 51%; /* Adjusted Red for dark theme */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 215 28% 23%; /* Slightly lighter border */
-    --input: 215 28% 23%;
+    --border: 222 40% 20%; /* Figma: #2A354B (approx HSL(220, 27%, 23%)) */
+    --input: 222 40% 20%;
     --ring: 217 91% 60%; /* Ring color to match primary */
 
     --chart-1: 217 91% 60%;
@@ -61,7 +61,7 @@ body {
     --card: 222 47% 14%; 
     --card-foreground: 210 40% 96%;
 
-    --popover: 222 47% 11%;
+    --popover: 222 47% 9%;
     --popover-foreground: 210 40% 96%;
 
     --primary: 217 91% 60%; 
@@ -70,7 +70,7 @@ body {
     --secondary: 215 28% 17%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 28% 17%;
+    --muted: 215 28% 23%;
     --muted-foreground: 215 20% 65%;
 
     --accent: 200 80% 55%; 
@@ -79,8 +79,8 @@ body {
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 215 28% 23%;
-    --input: 215 28% 23%;
+    --border: 222 40% 20%;
+    --input: 222 40% 20%;
     --ring: 217 91% 60%;
 
     --chart-1: 217 91% 60%;
@@ -108,5 +108,43 @@ body {
   body {
     @apply bg-background text-foreground;
     @apply min-h-screen flex flex-col;
+  }
+
+  /* Prose styles for dark mode */
+  .dark .prose-invert {
+    --tw-prose-body: hsl(var(--foreground) / 0.9);
+    --tw-prose-headings: hsl(var(--primary));
+    --tw-prose-lead: hsl(var(--muted-foreground));
+    --tw-prose-links: hsl(var(--primary));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-counters: hsl(var(--muted-foreground));
+    --tw-prose-bullets: hsl(var(--border));
+    --tw-prose-hr: hsl(var(--border));
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--border));
+    --tw-prose-captions: hsl(var(--muted-foreground));
+    --tw-prose-code: hsl(var(--foreground));
+    --tw-prose-pre-code: hsl(var(--foreground));
+    --tw-prose-pre-bg: hsl(var(--card)); /* Use card background for code blocks */
+    --tw-prose-th-borders: hsl(var(--border));
+    --tw-prose-td-borders: hsl(var(--border));
+  }
+  .prose { /* Ensure default prose is also reasonably styled for light mode if it ever gets used */
+     --tw-prose-body: hsl(var(--foreground) / 0.9);
+    --tw-prose-headings: hsl(var(--primary));
+    --tw-prose-lead: hsl(var(--muted-foreground));
+    --tw-prose-links: hsl(var(--primary));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-counters: hsl(var(--muted-foreground));
+    --tw-prose-bullets: hsl(var(--border));
+    --tw-prose-hr: hsl(var(--border));
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--border));
+    --tw-prose-captions: hsl(var(--muted-foreground));
+    --tw-prose-code: hsl(var(--foreground));
+    --tw-prose-pre-code: hsl(var(--foreground));
+    --tw-prose-pre-bg: hsl(var(--card));
+    --tw-prose-th-borders: hsl(var(--border));
+    --tw-prose-td-borders: hsl(var(--border));
   }
 }
