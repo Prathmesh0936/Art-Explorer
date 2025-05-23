@@ -11,7 +11,7 @@ import {
   signOut as firebaseSignOut,
   type AuthError,
 } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth } from '@/lib/firebase'; // auth can be undefined if firebase.ts fails to initialize
 import { useToast } from "@/hooks/use-toast";
 
 interface AuthContextType {
@@ -44,23 +44,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     if (!auth) {
       console.error(
-        "Firebase Auth service is not available. This often means Firebase isn't configured correctly with environment variables. Please check your .env.local file and ensure your Next.js server was restarted after changes."
+        "AuthContext: Firebase Auth service (`auth` object) is not available. This typically means Firebase failed to initialize in `src/lib/firebase.ts`, most likely due to MISSING or INCORRECT `NEXT_PUBLIC_FIREBASE_...` environment variables. Authentication will NOT work. Please check your console for messages from `firebase.ts` and verify your `.env.local` file or Firebase Studio environment configuration. Ensure your development environment was restarted after any changes to environment variables."
       );
       toast({
-        title: "Authentication Error",
-        description: "Firebase authentication service is not available. Please check the setup and console for details.",
+        title: "Authentication Initialization Error",
+        description: "Critical: Firebase Auth could not initialize. Check console & environment variables (e.g., API Key). Auth features disabled.",
         variant: "destructive",
-        duration: 10000, // Keep this message visible longer
+        duration: 20000, // Longer duration for this critical setup error
       });
-      setLoading(false); // Stop loading as auth operations will fail
-      return; // Skip setting up onAuthStateChanged
+      setLoading(false); // Crucial: stop loading if auth is not available
+      return; // Stop further auth processing
     }
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
     }, (error) => {
-      // Handle errors from onAuthStateChanged itself, e.g., network issues or permissions
       console.error("Error in onAuthStateChanged:", error);
       toast({
         title: "Authentication State Error",
@@ -70,12 +69,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setLoading(false);
     });
 
-    return unsubscribe; // Cleanup subscription on unmount
-  }, [toast]); // Add toast to dependency array
+    return unsubscribe;
+  }, [toast]);
 
   const signup = async (email: string, password: string): Promise<User | null> => {
     if (!auth) {
-      toast({ title: "Signup Failed", description: "Authentication service not available.", variant: "destructive" });
+      toast({ title: "Signup Failed", description: "Authentication service not properly initialized.", variant: "destructive" });
       return null;
     }
     setLoading(true);
@@ -83,20 +82,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       setCurrentUser(userCredential.user);
       toast({ title: "Success", description: "Account created successfully!" });
-      setLoading(false);
       return userCredential.user;
     } catch (error) {
       const authError = error as AuthError;
       console.error('Signup Error:', authError);
       toast({ title: "Signup Failed", description: authError.message, variant: "destructive" });
-      setLoading(false);
       return null;
+    } finally {
+      setLoading(false);
     }
   };
 
   const login = async (email: string, password: string): Promise<User | null> => {
     if (!auth) {
-      toast({ title: "Login Failed", description: "Authentication service not available.", variant: "destructive" });
+      toast({ title: "Login Failed", description: "Authentication service not properly initialized.", variant: "destructive" });
       return null;
     }
     setLoading(true);
@@ -104,20 +103,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setCurrentUser(userCredential.user);
       toast({ title: "Success", description: "Logged in successfully!" });
-      setLoading(false);
       return userCredential.user;
     } catch (error) {
       const authError = error as AuthError;
       console.error('Login Error:', authError);
       toast({ title: "Login Failed", description: authError.message, variant: "destructive" });
-      setLoading(false);
       return null;
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
     if (!auth) {
-      toast({ title: "Logout Failed", description: "Authentication service not available.", variant: "destructive" });
+      toast({ title: "Logout Failed", description: "Authentication service not properly initialized.", variant: "destructive" });
       return;
     }
     setLoading(true);
