@@ -10,6 +10,7 @@ import Image from 'next/image';
 import type { ArticApiResponse, Artwork } from '@/lib/types';
 import { ArrowRight, Brush } from 'lucide-react';
 import GlobalPageStyles from '@/components/GlobalPageStyles';
+import { CategoryArtworkDisplay } from '@/components/CategoryArtworkDisplay';
 
 interface HomeProps {
   searchParams?: {
@@ -18,7 +19,7 @@ interface HomeProps {
   };
 }
 
-async function ArtworksDisplay({ query, currentPage }: { query?: string; currentPage: number }) {
+async function PaginatedArtworksSearch({ query, currentPage }: { query?: string; currentPage: number }) {
   const artworksData: ArticApiResponse<Artwork> = await fetchArtworks(query, currentPage);
   
   const totalPages = artworksData.pagination.total_pages;
@@ -29,7 +30,7 @@ async function ArtworksDisplay({ query, currentPage }: { query?: string; current
       {artworksData.data.length > 0 && totalPages > 1 && (
         <div className="mt-12 flex justify-center items-center gap-4">
           {currentPage > 1 && (
-            <Link href={`/?${new URLSearchParams({ ...(query ? { q: query } : {}), page: (currentPage - 1).toString() })}#featured-artworks`} passHref>
+            <Link href={`/?${new URLSearchParams({ ...(query ? { q: query } : {}), page: (currentPage - 1).toString() })}#explore-collection`} passHref>
               <Button variant="outline">Previous</Button>
             </Link>
           )}
@@ -37,7 +38,7 @@ async function ArtworksDisplay({ query, currentPage }: { query?: string; current
             Page {currentPage} of {totalPages}
           </span>
           {currentPage < totalPages && (
-            <Link href={`/?${new URLSearchParams({ ...(query ? { q: query } : {}), page: (currentPage + 1).toString() })}#featured-artworks`} passHref>
+            <Link href={`/?${new URLSearchParams({ ...(query ? { q: query } : {}), page: (currentPage + 1).toString() })}#explore-collection`} passHref>
               <Button variant="outline">Next</Button>
             </Link>
           )}
@@ -75,31 +76,59 @@ export default async function HomePage({ searchParams }: HomeProps) {
             Explore a curated collection of masterpieces from renowned artists and emerging talents.
           </p>
           <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground py-3 px-6 md:px-8 text-md md:text-lg rounded-md shadow-lg transition-transform hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background animate-fade-in-up animation-delay-600">
-            <Link href="/#featured-artworks">Explore Gallery <ArrowRight className="ml-2 h-5 w-5" /></Link>
+            <Link href="/#explore-collection">Explore Gallery <ArrowRight className="ml-2 h-5 w-5" /></Link>
           </Button>
         </div>
       </section>
 
-      {/* Featured Artworks Section */}
-      <section id="featured-artworks" className="py-16 md:py-24 bg-background">
+      {/* Category Sections */}
+      <Suspense fallback={<FullPageLoading message="Loading art categories..." />}>
+        <CategoryArtworkDisplay 
+          title="Featured Paintings" 
+          description="Dive into a world of color and emotion with these selected paintings."
+          query="painting" 
+          itemCount={4} 
+          className="bg-card"
+        />
+      </Suspense>
+      <Suspense fallback={<FullPageLoading message="Loading art categories..." />}>
+        <CategoryArtworkDisplay 
+          title="Sculpture & 3D Forms" 
+          description="Experience art in three dimensions, from classical to contemporary."
+          query="sculpture" 
+          itemCount={4}
+        />
+      </Suspense>
+      <Suspense fallback={<FullPageLoading message="Loading art categories..." />}>
+        <CategoryArtworkDisplay 
+          title="Photography Showcase" 
+          description="Capturing moments and perspectives through the camera's lens."
+          query="photograph photography" 
+          itemCount={4}
+          className="bg-card"
+        />
+      </Suspense>
+
+      {/* Explore Our Full Collection Section */}
+      <section id="explore-collection" className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-4">Featured Artworks</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-4">Explore Our Full Collection</h2>
             <p className="text-md sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              A glimpse into our diverse collection. Find your next inspiration.
+              Use the search below to find specific artworks or browse our extensive catalog.
             </p>
           </div>
           <div className="mb-10 md:mb-12 max-w-xl mx-auto">
              <SearchBar />
           </div>
           <Suspense key={query + currentPage.toString()} fallback={<FullPageLoading message="Fetching artworks..." />}>
-            <ArtworksDisplay query={query} currentPage={currentPage} />
+            <PaginatedArtworksSearch query={query} currentPage={currentPage} />
           </Suspense>
         </div>
       </section>
 
       {/* Artist Spotlight Section */}
-      <section className="py-16 md:py-24 bg-card"> {/* Changed to bg-card for contrast */}
+      <section className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-16">
             <div className="md:w-1/2 w-full relative aspect-square md:aspect-[4/3] rounded-lg overflow-hidden shadow-2xl group">
@@ -127,17 +156,18 @@ export default async function HomePage({ searchParams }: HomeProps) {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary via-accent to-blue-700 text-primary-foreground"> {/* Adjusted gradient */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-primary via-accent to-blue-700 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-6">Ready to Explore?</h2>
           <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto">
             Dive into a world of creativity and find pieces that speak to you. Our collection is constantly growing.
           </p>
           <Button asChild size="lg" variant="secondary" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 py-3 px-6 md:px-8 text-md md:text-lg rounded-md shadow-xl transition-transform hover:scale-105 focus:ring-2 focus:ring-primary-foreground focus:ring-offset-2 focus:ring-offset-primary">
-            <Link href="/#featured-artworks">Start Your Journey</Link>
+            <Link href="/#explore-collection">Start Your Journey</Link>
           </Button>
         </div>
       </section>
     </div>
   );
 }
+
