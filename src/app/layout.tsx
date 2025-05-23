@@ -6,7 +6,7 @@ import { Header } from '@/components/Header';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Artisan - Discover Timeless Artistry',
+  title: 'Art Explorer - Discover Timeless Artistry',
   description: 'Explore a curated collection of masterpieces from the Art Institute of Chicago and other renowned artists.',
 };
 
@@ -24,7 +24,7 @@ export default function RootLayout({
         </main>
         <Toaster />
         <footer className="py-8 text-center text-muted-foreground text-sm border-t border-border mt-auto bg-card">
-          <p>&copy; {new Date().getFullYear()} Artisan. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Art Explorer. All rights reserved.</p>
           <p>Powered by creativity and code. Artwork data from public APIs.</p>
         </footer>
       </body>
