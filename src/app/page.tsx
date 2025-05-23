@@ -1,3 +1,4 @@
+
 import { fetchArtworks } from '@/lib/api';
 import { ArtworkGrid } from '@/components/ArtworkGrid';
 import { SearchBar } from '@/components/SearchBar';
@@ -17,7 +18,7 @@ interface HomeProps {
 async function ArtworksDisplay({ query, currentPage }: { query?: string; currentPage: number }) {
   const artworksData: ArticApiResponse<Artwork> = await fetchArtworks(query, currentPage);
   
-  consttotalPages = artworksData.pagination.total_pages;
+  const totalPages = artworksData.pagination.total_pages;
 
   return (
     <>
@@ -65,3 +66,4 @@ export default async function HomePage({ searchParams }: HomeProps) {
     </div>
   );
 }
+
