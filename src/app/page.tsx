@@ -56,35 +56,6 @@ export default async function HomePage({ searchParams }: HomeProps) {
     <div className="flex flex-col bg-background text-foreground">
       <GlobalPageStyles />
 
-      {/* Hero Section */}
-      <section className="relative h-[calc(100vh-80px)] min-h-[500px] md:min-h-[600px] flex items-center justify-center text-center text-primary-foreground p-4 overflow-hidden">
-        <Image
-          src="https://placehold.co/1920x1080.png"
-          alt="Art museum interior"
-          fill
-          priority
-          className="object-cover brightness-[0.4] z-0"
-          data-ai-hint="museum interior art"
-        />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-            Discover Timeless Artistry
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-primary-foreground/80 mb-10 animate-fade-in-up animation-delay-300">
-            Explore a curated collection of masterpieces from renowned artists and emerging talents.
-          </p>
-          <Button
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 py-3 px-6 md:px-8 text-md md:text-lg rounded-md shadow-xl transition-transform hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background animate-fade-in-up animation-delay-600"
-            asChild
-          >
-            <Link href="/#explore-collection">
-              Explore Gallery <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
-      </section>
-
       {/* Featured Artworks Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
