@@ -8,9 +8,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { ArticApiResponse, Artwork } from '@/lib/types';
-import { ArrowRight, Brush, ListTree } from 'lucide-react';
+import { ArrowRight, Brush } from 'lucide-react';
 import GlobalPageStyles from '@/components/GlobalPageStyles';
-import { InteractiveCategoryList } from '@/components/InteractiveCategoryList';
 
 interface HomeProps {
   searchParams?: {
@@ -57,22 +56,6 @@ export default async function HomePage({ searchParams }: HomeProps) {
     <div className="flex flex-col bg-background text-foreground">
       <GlobalPageStyles />
       
-      {/* Browse by Category Section */}
-      <section id="browse-categories" className="py-16 md:py-24 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12 md:mb-16">
-            <ListTree className="text-primary h-10 w-10 md:h-12 md:w-12 mx-auto mb-4" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-4">Browse by Category</h2>
-            <p className="text-md sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore different genres and styles by selecting a category and its sub-topics.
-            </p>
-          </div>
-          <div className="max-w-3xl mx-auto">
-            <InteractiveCategoryList />
-          </div>
-        </div>
-      </section>
-
       {/* Explore Our Full Collection Section */}
       <section id="explore-collection" className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
