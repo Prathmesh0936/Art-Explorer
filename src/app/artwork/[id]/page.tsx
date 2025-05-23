@@ -1,3 +1,4 @@
+
 import { fetchArtworkById, getImageUrl, getBestDescriptionForAI } from '@/lib/api';
 import { summarizeArtwork } from '@/ai/flows/artwork-summarizer';
 import type { ArtworkDetail } from '@/lib/types';
@@ -22,14 +23,7 @@ interface ArtworkPageProps {
 async function ArtworkSummary({ artwork }: { artwork: ArtworkDetail }) {
   if (!artwork.title || !artwork.artist_display) {
     return (
-       <Card className="mt-6 bg-secondary/30 border-border shadow-none">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base font-semibold"><Feather className="text-primary w-5 h-5" /> AI-Powered Insights</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">Summary cannot be generated due to missing title or artist information.</p>
-        </CardContent>
-      </Card>
+      <p className="text-muted-foreground">Summary cannot be generated due to missing title or artist information.</p>
     );
   }
   const descriptionForAI = getBestDescriptionForAI(artwork);
@@ -41,29 +35,12 @@ async function ArtworkSummary({ artwork }: { artwork: ArtworkDetail }) {
     });
 
     return (
-      <Card className="mt-0 shadow-none border-0 bg-transparent">
-        {/* <CardHeader className="p-0 pb-4">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-primary">
-            <Feather className="w-5 h-5" />
-            AI-Powered Insights
-          </CardTitle>
-        </CardHeader> */}
-        <CardContent className="p-0">
-          <p className="text-foreground/90 leading-relaxed">{summaryResult.summary}</p>
-        </CardContent>
-      </Card>
+      <p className="text-foreground/90 leading-relaxed">{summaryResult.summary}</p>
     );
   } catch (error) {
     console.error("Failed to generate artwork summary:", error);
     return (
-      <Card className="mt-0 bg-destructive/10 shadow-none border-0">
-        {/* <CardHeader className="p-0 pb-4">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold"><Sparkles className="text-destructive w-5 h-5" /> AI Insights Error</CardTitle>
-        </CardHeader> */}
-        <CardContent className="p-0">
-          <p className="text-destructive-foreground">Could not generate AI insights at this time. Please try again later.</p>
-        </CardContent>
-      </Card>
+       <p className="text-destructive">Could not generate AI insights at this time. Please try again later.</p>
     );
   }
 }
@@ -106,13 +83,13 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
       <div className="grid md:grid-cols-5 gap-8 lg:gap-12">
         {/* Left Column: Image */}
         <div className="md:col-span-3">
-          <Card className="overflow-hidden shadow-xl aspect-w-4 aspect-h-3 md:aspect-h-auto md:sticky md:top-24">
+          <Card className="overflow-hidden shadow-xl rounded-lg md:sticky md:top-24">
              <Image
                 src={imageUrl}
                 alt={placeholderText}
                 width={800}
-                height={600} // Adjust height as needed, or use aspect ratio
-                className="object-contain w-full h-full bg-muted rounded-lg"
+                height={600} 
+                className="object-contain w-full h-auto aspect-[4/3] bg-muted rounded-lg"
                 placeholder={artwork.thumbnail?.lqip ? 'blur' : 'empty'}
                 blurDataURL={artwork.thumbnail?.lqip}
                 data-ai-hint="artwork large painting"
@@ -133,7 +110,7 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
           </div>
 
           <Tabs defaultValue="details" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto mb-4">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto mb-6 border-b-0 md:border-b bg-muted/50 md:bg-muted p-1 rounded-lg">
               <TabsTrigger value="details" className="py-2.5"><Info className="mr-2 h-4 w-4 sm:hidden md:inline-block" />Details</TabsTrigger>
               <TabsTrigger value="description" className="py-2.5"><FileText className="mr-2 h-4 w-4 sm:hidden md:inline-block" />Description</TabsTrigger>
               <TabsTrigger value="ai-insights" className="py-2.5"><Brain className="mr-2 h-4 w-4 sm:hidden md:inline-block" />AI Insights</TabsTrigger>
