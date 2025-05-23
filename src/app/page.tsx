@@ -72,43 +72,6 @@ export default async function HomePage({ searchParams }: HomeProps) {
         </div>
       </section>
       
-      {/* Artist Spotlight Section */}
-      <section className="py-16 md:py-24 bg-card text-card-foreground">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-16">
-            <div className="md:w-1/2 w-full relative aspect-square md:aspect-[4/3] rounded-lg overflow-hidden shadow-2xl group">
-              <Image
-                src="https://placehold.co/800x600.png"
-                alt="Artist Elena Petrova"
-                fill
-                style={{ objectFit: 'cover' }}
-                className="transition-transform duration-500 ease-in-out group-hover:scale-105"
-                data-ai-hint="artist portrait painting"
-              />
-            </div>
-            <div className="md:w-1/2 text-center md:text-left">
-              <Brush className="text-primary h-10 w-10 md:h-12 md:w-12 mx-auto md:mx-0 mb-4" />
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-4">
-                Spotlight on: Elena Petrova
-              </h3>
-              <p className="text-md sm:text-lg text-muted-foreground mb-6 leading-relaxed">
-                Elena Petrova, a contemporary visionary, masterfully blends classical techniques with modern abstraction. Her work explores themes of nature, emotion, and the passage of time, inviting viewers into a world of vibrant color and intricate detail.
-              </p>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-primary text-primary hover:bg-primary/10 hover:text-primary rounded-md shadow-md transition-all hover:shadow-lg hover:border-primary/80"
-                asChild
-              >
-                <Link href="/?q=Elena%20Petrova#explore-collection">
-                  Discover Her Work <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Explore Our Full Collection Section */}
       <section id="explore-collection" className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
