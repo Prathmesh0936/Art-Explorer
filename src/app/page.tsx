@@ -156,25 +156,6 @@ export default async function HomePage({ searchParams }: HomeProps) {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary via-primary/80 to-accent text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-6">
-            Ready to Explore?
-          </h2>
-          <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-            Dive into a world of creativity and find pieces that speak to you. Our collection is constantly growing.
-          </p>
-          <Button
-            asChild
-            size="lg"
-            variant="secondary"
-            className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 py-3 px-6 md:px-8 text-md md:text-lg rounded-md shadow-xl transition-transform hover:scale-105 focus:ring-2 focus:ring-primary-foreground focus:ring-offset-2 focus:ring-offset-primary"
-          >
-            <Link href="/#explore-collection">Start Your Journey</Link>
-          </Button>
-        </div>
-      </section>
     </div>
   );
 }
