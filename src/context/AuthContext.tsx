@@ -44,13 +44,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     if (!auth) {
       console.error(
-        "AuthContext: Firebase Auth service (`auth` object) is not available. This typically means Firebase failed to initialize in `src/lib/firebase.ts`, most likely due to MISSING or INCORRECT `NEXT_PUBLIC_FIREBASE_...` environment variables. Authentication will NOT work. Please check your console for messages from `firebase.ts` and verify your `.env.local` file or Firebase Studio environment configuration. Ensure your development environment was restarted after any changes to environment variables."
+        "AuthContext: Firebase Auth service (`auth` object from '@/lib/firebase') is not available. This typically means Firebase failed to initialize in `src/lib/firebase.ts`, most likely due to MISSING or INCORRECT `NEXT_PUBLIC_FIREBASE_...` environment variables. Authentication will NOT work. Please check your console for messages from `firebase.ts` and verify your `.env.local` file or Firebase Studio environment configuration. Ensure your development environment was restarted after any changes to environment variables."
       );
       toast({
-        title: "Authentication Initialization Error",
-        description: "Critical: Firebase Auth could not initialize. Check console & environment variables (e.g., API Key). Auth features disabled.",
+        title: "Authentication Service Unavailable",
+        description: "Critical: Firebase Auth service could not initialize. Check console logs from 'firebase.ts' and ensure your environment variables (e.g., NEXT_PUBLIC_FIREBASE_API_KEY) are correctly set and your environment was restarted. Auth features are disabled.",
         variant: "destructive",
-        duration: 20000, // Longer duration for this critical setup error
+        duration: 30000, // Longer duration for this critical setup error
       });
       setLoading(false); // Crucial: stop loading if auth is not available
       return; // Stop further auth processing
@@ -74,7 +74,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signup = async (email: string, password: string): Promise<User | null> => {
     if (!auth) {
-      toast({ title: "Signup Failed", description: "Authentication service not properly initialized.", variant: "destructive" });
+      toast({ title: "Signup Failed", description: "Authentication service not properly initialized. Check environment variables and console logs.", variant: "destructive" });
       return null;
     }
     setLoading(true);
@@ -95,7 +95,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (email: string, password: string): Promise<User | null> => {
     if (!auth) {
-      toast({ title: "Login Failed", description: "Authentication service not properly initialized.", variant: "destructive" });
+      toast({ title: "Login Failed", description: "Authentication service not properly initialized. Check environment variables and console logs.", variant: "destructive" });
       return null;
     }
     setLoading(true);
@@ -116,7 +116,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = async () => {
     if (!auth) {
-      toast({ title: "Logout Failed", description: "Authentication service not properly initialized.", variant: "destructive" });
+      toast({ title: "Logout Failed", description: "Authentication service not properly initialized. Check environment variables and console logs.", variant: "destructive" });
       return;
     }
     setLoading(true);
@@ -140,6 +140,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     login,
     logout,
   };
+
+  // If loading and auth is not available, show a minimal state or a message.
+  // This helps prevent rendering children that might depend on auth context prematurely.
+  if (loading && !auth && !currentUser) {
+     return (
+      <div style={{ padding: '20px', textAlign: 'center', color: 'hsl(var(--destructive-foreground))', background: 'hsl(var(--destructive))' }}>
+        Critical Firebase Configuration Error: Authentication service is not available.
+        Please check console logs for details and ensure your Firebase environment variables are correctly set up.
+      </div>
+    );
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
