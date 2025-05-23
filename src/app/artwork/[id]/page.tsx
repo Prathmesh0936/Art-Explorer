@@ -95,7 +95,7 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
   const placeholderText = artwork.thumbnail?.alt_text || artwork.title || "Artwork image";
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto p-4 md:p-8">
       <Link href="/" passHref className="mb-8 inline-flex">
         <Button variant="outline">
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -139,7 +139,7 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
                 <div>
                   <h3 className="text-sm font-medium text-muted-foreground mb-1">Categories</h3>
                   <div className="flex flex-wrap gap-2">
-                    {artwork.category_titles.map(cat => <Badge key={cat} variant="secondary">{cat}</Badge>)}
+                    {artwork.category_titles.map((cat, index) => <Badge key={`${cat}-${index}`} variant="secondary">{cat}</Badge>)}
                   </div>
                 </div>
               )}
@@ -148,7 +148,7 @@ export default async function ArtworkPage({ params }: ArtworkPageProps) {
                  <div>
                   <h3 className="text-sm font-medium text-muted-foreground mb-1">Keywords</h3>
                   <div className="flex flex-wrap gap-2">
-                    {artwork.term_titles.map(term => <Badge key={term} variant="outline">{term}</Badge>)}
+                    {artwork.term_titles.map((term, index) => <Badge key={`${term}-${index}`} variant="outline">{term}</Badge>)}
                   </div>
                 </div>
               )}
